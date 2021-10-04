@@ -178,6 +178,8 @@ static inline CGFloat radiansToDegrees(CGFloat radians) {
   }
   AVURLAsset* urlAsset = [AVURLAsset URLAssetWithURL:url options:options];
   AVPlayerItem* item = [AVPlayerItem playerItemWithAsset:urlAsset];
+  item.preferredForwardBufferDuration = 1;
+
   return [self initWithPlayerItem:item frameUpdater:frameUpdater];
 }
 
@@ -242,6 +244,7 @@ static inline CGFloat radiansToDegrees(CGFloat radians) {
 
   _player = [AVPlayer playerWithPlayerItem:item];
   _player.actionAtItemEnd = AVPlayerActionAtItemEndNone;
+  _player.automaticallyWaitsToMinimizeStalling = false;
 
   [self createVideoOutputAndDisplayLink:frameUpdater];
 
@@ -538,6 +541,7 @@ static inline CGFloat radiansToDegrees(CGFloat radians) {
     player = [[FLTVideoPlayer alloc] initWithURL:[NSURL URLWithString:input.uri]
                                     frameUpdater:frameUpdater
                                      httpHeaders:input.httpHeaders];
+
     return [self onPlayerSetup:player frameUpdater:frameUpdater];
   } else {
     *error = [FlutterError errorWithCode:@"video_player" message:@"not implemented" details:nil];
