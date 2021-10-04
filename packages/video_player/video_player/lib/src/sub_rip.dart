@@ -16,8 +16,6 @@ class SubRipCaptionFile extends ClosedCaptionFile {
       : _captions = _parseCaptionsFromSubRipString(fileContents);
 
   /// The entire body of the SubRip file.
-  // TODO(cyanglaz): Remove this public member as it doesn't seem need to exist.
-  // https://github.com/flutter/flutter/issues/90471
   final String fileContents;
 
   @override
@@ -32,15 +30,15 @@ List<Caption> _parseCaptionsFromSubRipString(String file) {
     if (captionLines.length < 3) break;
 
     final int captionNumber = int.parse(captionLines[0]);
-    final _CaptionRange captionRange =
-        _CaptionRange.fromSubRipString(captionLines[1]);
+    final _StartAndEnd startAndEnd =
+        _StartAndEnd.fromSubRipString(captionLines[1]);
 
     final String text = captionLines.sublist(2).join('\n');
 
     final Caption newCaption = Caption(
       number: captionNumber,
-      start: captionRange.start,
-      end: captionRange.end,
+      start: startAndEnd.start,
+      end: startAndEnd.end,
       text: text,
     );
     if (newCaption.start != newCaption.end) {
@@ -51,21 +49,21 @@ List<Caption> _parseCaptionsFromSubRipString(String file) {
   return captions;
 }
 
-class _CaptionRange {
+class _StartAndEnd {
   final Duration start;
   final Duration end;
 
-  _CaptionRange(this.start, this.end);
+  _StartAndEnd(this.start, this.end);
 
   // Assumes format from an SubRip file.
   // For example:
   // 00:01:54,724 --> 00:01:56,760
-  static _CaptionRange fromSubRipString(String line) {
+  static _StartAndEnd fromSubRipString(String line) {
     final RegExp format =
         RegExp(_subRipTimeStamp + _subRipArrow + _subRipTimeStamp);
 
     if (!format.hasMatch(line)) {
-      return _CaptionRange(Duration.zero, Duration.zero);
+      return _StartAndEnd(Duration.zero, Duration.zero);
     }
 
     final List<String> times = line.split(_subRipArrow);
@@ -73,7 +71,7 @@ class _CaptionRange {
     final Duration start = _parseSubRipTimestamp(times[0]);
     final Duration end = _parseSubRipTimestamp(times[1]);
 
-    return _CaptionRange(start, end);
+    return _StartAndEnd(start, end);
   }
 }
 

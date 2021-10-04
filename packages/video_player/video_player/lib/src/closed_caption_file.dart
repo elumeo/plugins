@@ -5,9 +5,6 @@
 import 'sub_rip.dart';
 export 'sub_rip.dart' show SubRipCaptionFile;
 
-import 'web_vtt.dart';
-export 'web_vtt.dart' show WebVTTCaptionFile;
-
 /// A structured representation of a parsed closed caption file.
 ///
 /// A closed caption file includes a list of captions, each with a start and end
@@ -18,7 +15,6 @@ export 'web_vtt.dart' show WebVTTCaptionFile;
 ///
 /// See:
 /// * [SubRipCaptionFile].
-/// * [WebVTTCaptionFile].
 abstract class ClosedCaptionFile {
   /// The full list of captions from a given file.
   ///
