@@ -72,7 +72,7 @@ final class VideoPlayer {
     this.options = options;
 
     DefaultLoadControl.Builder builder = new DefaultLoadControl.Builder();
-    builder.setBufferDurationsMs(200, 1500, 100, 100);
+    builder.setBufferDurationsMs(1000, 2500, 1000, 1000);
 
     exoPlayer = new SimpleExoPlayer.Builder(context).setLoadControl(builder.build()).build();
 
