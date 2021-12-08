@@ -247,6 +247,10 @@ static inline CGFloat radiansToDegrees(CGFloat radians) {
   _player = [AVPlayer playerWithPlayerItem:item];
   _player.actionAtItemEnd = AVPlayerActionAtItemEndNone;
   _player.automaticallyWaitsToMinimizeStalling = false;
+  // jooli buffer setting here
+  NSTimeInterval interval = 3;
+  _player.automaticallyWaitsToMinimizeStalling = YES;
+  _player.currentItem.preferredForwardBufferDuration = interval;
 
   [self createVideoOutputAndDisplayLink:frameUpdater];
 
@@ -543,8 +547,6 @@ static inline CGFloat radiansToDegrees(CGFloat radians) {
     player = [[FLTVideoPlayer alloc] initWithURL:[NSURL URLWithString:input.uri]
                                     frameUpdater:frameUpdater
                                      httpHeaders:input.httpHeaders];
-    // jooli buffer setting here
-    player.automaticallyWaitsToMinimizeStalling = YES;
 
     return [self onPlayerSetup:player frameUpdater:frameUpdater];
   } else {
