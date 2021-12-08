@@ -178,7 +178,9 @@ static inline CGFloat radiansToDegrees(CGFloat radians) {
   }
   AVURLAsset* urlAsset = [AVURLAsset URLAssetWithURL:url options:options];
   AVPlayerItem* item = [AVPlayerItem playerItemWithAsset:urlAsset];
-  item.preferredForwardBufferDuration = 1;
+  // jooli buffer setting here
+  NSTimeInterval interval = 3;
+  item.preferredForwardBufferDuration = interval;
 
   return [self initWithPlayerItem:item frameUpdater:frameUpdater];
 }
@@ -541,6 +543,8 @@ static inline CGFloat radiansToDegrees(CGFloat radians) {
     player = [[FLTVideoPlayer alloc] initWithURL:[NSURL URLWithString:input.uri]
                                     frameUpdater:frameUpdater
                                      httpHeaders:input.httpHeaders];
+    // jooli buffer setting here
+    player.automaticallyWaitsToMinimizeStalling = YES;
 
     return [self onPlayerSetup:player frameUpdater:frameUpdater];
   } else {
