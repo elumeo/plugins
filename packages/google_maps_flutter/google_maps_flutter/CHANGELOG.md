@@ -1,3 +1,18 @@
+## 2.1.2
+
+* Removes dependencies from `pubspec.yaml` that are only needed in `example/pubspec.yaml`
+* Updates Android compileSdkVersion to 31.
+* Internal code cleanup for stricter analysis options.
+
+## 2.1.1
+
+* Suppresses unchecked cast warning.
+
+## 2.1.0
+
+* Add iOS unit and UI integration test targets.
+* Provide access to Hybrid Composition on Android through the `GoogleMap` widget.
+
 ## 2.0.11
 
 * Add additional marker drag events.
